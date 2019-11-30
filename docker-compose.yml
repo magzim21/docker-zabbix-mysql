@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'zabbix'
+      MYSQL_USER: 'zabbix-user'
+      MYSQL_PASSWORD: 'zabbix-secure-password'
+      MYSQL_ROOT_PASSWORD: 'root-secure-password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  zabbix:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - db

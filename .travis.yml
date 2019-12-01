@@ -3,4 +3,24 @@ services:
   -docker
   
 before_install:
-  - docker-compose -f zabbix-compose.yml up 
+  - docker-compose -f zabbix-compose.yml up
+  # This will create an image of every running container (TODO make verbous container names through bash array indices )
+  - for container in $(docker ps -q) ; do docker commit $container magzim21/$container; done
+  - docker login --username magzim21 --password $DOCKER_PASSWORD
+  - for image in $(images --format "{{.Repository}}") ; do docker push $image; done
+
+
+# Just another option for deploying:
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "eu-central-1"
+#   app: "zabbix-sql"
+#   env: "ZabbixSql-env"
+#   bucket_name: "elasticbeanstalk-eu-central-1-249446252531"
+#   bucket_path: "zabbix-sql"
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"

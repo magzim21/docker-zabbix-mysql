@@ -16,6 +16,7 @@ services:
     volumes:
       - ./mysql/tables:/docker-entrypoint-initdb.d
   zabbix:
+    image: magzim21/zabbix-mysql5.7
     build:
       context: ./zabbix/
       dockerfile: Dockerfile

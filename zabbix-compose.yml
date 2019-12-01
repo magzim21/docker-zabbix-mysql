@@ -1,25 +1,29 @@
 version: '3.3'
 services:
-  db:
+  database:
     image: mysql:5.7
-    # restart: always
+    restart: always
     environment:
       MYSQL_DATABASE: 'zabbix'
       MYSQL_USER: 'zabbix-user'
       MYSQL_PASSWORD: 'zabbix-secure-password'
       MYSQL_ROOT_PASSWORD: 'root-secure-password'
-    ports:
-      - '3306:3306'
-    expose:
-      - '3306'
+    # ports:
+    #   - '3306:3306'
+    # expose:
+    #   - '3306'
       # This volume contains zabbix initial database dump
     volumes:
       - ./mysql/tables:/docker-entrypoint-initdb.d
   zabbix:
-    image: magzim21/zabbix-mysql5.7
+    image: magzim21/zabbix
     build:
       context: ./zabbix/
       dockerfile: Dockerfile
-    # restart: always
+    restart: always
+    ports:
+      - '80:80'
+    expose:
+      - '80'
     depends_on:
-      - db
+      - database

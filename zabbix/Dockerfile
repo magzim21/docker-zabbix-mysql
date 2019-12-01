@@ -19,8 +19,9 @@ RUN mkdir /var/run/zabbix
 RUN touch /var/run/zabbix/zabbix_server.pid
 RUN chown -R zabbix:zabbix /var/run/zabbix
 
-# The only thing I specified in zabbix_server.conf is a log file path
+# Custom config (LogFile,PidFile,SocketDir,DBHost,DBName,DBUser,DBPassword)
 COPY zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
 # https://stackoverflow.com/a/32179054/11103492
+RUN mkdir -p /var/log/zabbix
 ENTRYPOINT /usr/sbin/zabbix_server && tail -f /var/log/zabbix/zabbix_server.log

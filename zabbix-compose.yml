@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: magzim21/mysql5.7_zabbix_db
+    image: mysql:5.7
     restart: always
     environment:
       MYSQL_DATABASE: 'zabbix'
@@ -15,7 +15,9 @@ services:
     volumes:
       - ./mysql/tables:/docker-entrypoint-initdb.d
   zabbix:
-    image: magzim21/ubuntu18.04_zabbix
+    build:
+      context: ./zabbix/
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - db

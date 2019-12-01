@@ -19,7 +19,7 @@ RUN mkdir /var/run/zabbix
 RUN touch /var/run/zabbix/zabbix_server.pid
 RUN chown -R zabbix:zabbix /var/run/zabbix
 
-# I specified log file path in zabbix_server.conf
+# The only thing I specified in zabbix_server.conf is a log file path
 COPY zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
 # https://stackoverflow.com/a/32179054/11103492

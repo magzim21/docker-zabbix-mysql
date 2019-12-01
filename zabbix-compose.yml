@@ -12,6 +12,7 @@ services:
       - '3306:3306'
     expose:
       - '3306'
+      # This volume contains zabbix initial database dump
     volumes:
       - ./mysql/tables:/docker-entrypoint-initdb.d
   zabbix:

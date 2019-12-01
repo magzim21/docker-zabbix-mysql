@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  db:
+    image: magzim21/mysql5.7_zabbix_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'zabbix'
+      MYSQL_USER: 'zabbix-user'
+      MYSQL_PASSWORD: 'zabbix-secure-password'
+      MYSQL_ROOT_PASSWORD: 'root-secure-password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./mysql/tables:/docker-entrypoint-initdb.d
+  zabbix:
+    image: magzim21/ubuntu18.04_zabbix
+    restart: always
+    depends_on:
+      - db

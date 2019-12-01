@@ -14,10 +14,12 @@ RUN apt update
 RUN apt install zabbix-server-mysql zabbix-frontend-php -y
 RUN apt install zabbix-agent -y
 
+# Zabbix could not creare PID file on it's own. So I helped him.
 RUN mkdir /var/run/zabbix
 RUN touch /var/run/zabbix/zabbix_server.pid
 RUN chown -R zabbix:zabbix /var/run/zabbix
 
+# I specified log file path in zabbix_server.conf
 COPY zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
 # https://stackoverflow.com/a/32179054/11103492

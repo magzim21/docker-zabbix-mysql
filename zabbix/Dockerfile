@@ -1,7 +1,7 @@
 # Use existing docker image as a base
 FROM ubuntu:latest
 
-# ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 # https://askubuntu.com/a/1013396
 
 # Installing zabbix

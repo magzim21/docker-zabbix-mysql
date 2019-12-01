@@ -3,11 +3,10 @@ services:
   -docker
   
 before_install:
-  - docker-compose -f zabbix-compose.yml up
-  # This will create an image of every running container (TODO make verbous container names through bash array indices )
-  - for container in $(docker ps -q) ; do docker commit $container magzim21/$container; done
+  - docker-compose -f zabbix-compose.yml build
   - docker login --username magzim21 --password $DOCKER_PASSWORD
-  - for image in $(images --format "{{.Repository}}") ; do docker push $image; done
+  # This will select newly created image amonng all images and push it to dockerhub
+  - docker push $(docker images --format "{{.Repository}}" | grep '.*zabbix')
 
 
 # Just another option for deploying:
